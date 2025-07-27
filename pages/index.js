@@ -14,17 +14,11 @@ export default function Home() {
 
   useEffect(() => {
     fetchMessages();
-    fetchMedia();
   }, []);
 
   const fetchMessages = async () => {
     const { data } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
     setMessages(data || []);
-  };
-
-  const fetchMedia = async () => {
-    const { data } = await supabase.storage.from('memories').list('', { limit: 100 });
-    setMedia(data || []);
   };
 
   const handleSubmit = async (e) => {
@@ -33,14 +27,6 @@ export default function Home() {
     await supabase.from('messages').insert([{ text: message }]);
     setMessage('');
     fetchMessages();
-  };
-
-  const handleUpload = async () => {
-    if (!file) return;
-    const fileName = `${Date.now()}_${file.name}`;
-    await supabase.storage.from('memories').upload(fileName, file);
-    setFile(null);
-    fetchMedia();
   };
 
   return (
@@ -128,7 +114,8 @@ export default function Home() {
         }
 
         .tribute-img {
-          width: 10%;
+          max-width: 100%;
+          height: auto;
           display: block;
           margin: 1rem auto;
           border-radius: 12px;
@@ -136,7 +123,7 @@ export default function Home() {
         }
 
         .gallery-img {
-          width: 20%;
+          width: 100%;
           max-width: 300px;
           margin: 10px;
           border-radius: 8px;
@@ -148,7 +135,7 @@ export default function Home() {
         <img className="floral-top-right" src="/floral-right.png" alt="" />
         <h1>Joseph Mathew</h1>
         <p>July 6, 1969 – July 24, 2025</p>
-        <img className="tribute-img" src="/family.png" alt="Joseph Mathew" />
+        <img className="tribute-img" src="/pappa.png" alt="Joseph Mathew" />
       </header>
 
       <div className="section">
@@ -165,9 +152,9 @@ export default function Home() {
   On July 24, 2025, Joseph passed away — but not alone. His memory lives on in hundreds of hearts. The calls and messages that flooded in afterward came from all corners of the world — people Allen hadn’t even met — each one with a story of how “Pappa” made their life better, lighter, or funnier.
   <br /><br />
   He wasn’t just a loving father, husband, and son. He was everyone’s person. And though he’s gone, his laughter, music, and love will echo forever in our lives.
-   <br /><br />
-  I am not sure if I will ever be half the man you are, I promise to be good and responsible. I love you Pappa.</p>
-
+ <br /><br />
+ I don't know if I will ever be have the man you ever were, I promise i will be responsible. I love you Pappa.
+</p>
       </div>
 
       <div className="section">
@@ -190,22 +177,25 @@ export default function Home() {
       </div>
 
       <div className="section">
-        <h2>Upload a Photo or Video</h2>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <button onClick={handleUpload} style={{ marginLeft: '1rem' }}>Upload</button>
-      </div>
-
-      <div className="section">
         <h2>Gallery</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-          {media.map((item, index) => (
-            <div key={index}>
-              <img
-                className="gallery-img"
-                src={`https://qqhnnutmjsvkhafsihje.supabase.co/storage/v1/object/public/memories/${item.name}`}
-                alt="Uploaded Memory"
-              />
-            </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
+          {[...Array(36)].map((_, i) => (
+            <img
+              key={i}
+              className="gallery-img"
+              src={`/gallery/${i + 1}.jpg`}
+              alt={`Memory ${i + 1}`}
+            />
+          ))}
+          {[...Array(7)].map((_, i) => (
+            <video
+              key={i + 100}
+              className="gallery-img"
+              controls
+              src={`/gallery/${i + 1}.mp4`}
+            >
+              Your browser does not support the video tag.
+            </video>
           ))}
         </div>
       </div>
