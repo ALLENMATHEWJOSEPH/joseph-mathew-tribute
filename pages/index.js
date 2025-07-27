@@ -139,26 +139,47 @@ export default function Home() {
       </header>
 
       <div className="section">
-        <h2>About Joseph Mathew</h2>
-        <div className="section">
   <h2>About Joseph Mathew</h2>
   <p>
-  Joseph Mathew was the kind of man whose presence lit up a room long before he spoke. Born on July 6, 1969, in the warm embrace of a close-knit family, he was the youngest of five sons raised by Mr. Mathai Mathai and Mariayamma Mathai. Being the youngest, he was lovingly pampered by everyone — but never took that love for granted. From a young age, he carried both a deep sense of responsibility and an almost childlike joy for life.
-  <br /><br />
-  He studied at St. John&rsquo;s Boys School in Nedumkunnam, where he was known not just for his friendly nature but for his playful charm and signature smile. Later, he completed his ITI studies in Myladi. Like many selfless fathers, Joseph made the hard decision to live away from home in his early years to ensure a better future for his family. He worked hard, made sacrifices quietly, and always came home with stories and songs.
-  <br /><br />
-  Music ran in his blood. Joseph sang at every chance he got — weddings, birthdays, family dinners, even lazy Sundays. Rumor has it that it was his voice that first caught Theresa&rsquo;s heart, who would later become his beloved wife. Together, they built a home full of laughter, love, and care — raising Allen Mathew Joseph and Anitta Maria Joseph with strength and gentleness.
-  <br /><br />
-  Joseph had a rare gift: he made friends effortlessly. Strangers turned into friends, and friends into family. He was that guy — the one people called when they needed help, a laugh, or simply to feel heard. Even animals knew his kindness. He once fed a neighborhood cat daily, and it became part of his routine — walking him to the shed as he left for work and greeting him when he returned. When the cat passed away, Joseph shed quiet tears. That was the heart he had.
-  <br /><br />
-  On July 24, 2025, Joseph passed away — but not alone. His memory lives on in hundreds of hearts. The calls and messages that flooded in afterward came from all corners of the world — people Allen hadn&rsquo;t even met — each one with a story of how &ldquo;Pappa&rdquo; made their life better, lighter, or funnier.
-  <br /><br />
-  He wasn&rsquo;t just a loving father, husband, and son. He was everyone&rsquo;s person. And though he&rsquo;s gone, his laughter, music, and love will echo forever in our lives.
-  <br /><br />
-  I don&rsquo;t know if I will ever be half the man you ever were. I promise I&rsquo;ll be responsible. I love you, Pappa.
-</p>
-      </div>
-
+    Joseph Mathew was the kind of man whose presence lit up a room long before he spoke.
+    Born on July 6, 1969, in the warm embrace of a close-knit family, he was the youngest
+    of five sons raised by Mr. Mathai Mathai and Mariayamma Mathai. Being the youngest, he
+    was lovingly pampered by everyone — but never took that love for granted. From a young
+    age, he carried both a deep sense of responsibility and an almost childlike joy for life.
+  </p>
+  <p>
+    He studied at St. John’s Boys School in Nedumkunnam, where he was known not just for his
+    friendly nature but for his playful charm and signature smile. Later, he completed his ITI
+    studies in Myladi. Like many selfless fathers, Joseph made the hard decision to live away
+    from home in his early years to ensure a better future for his family. He worked hard,
+    made sacrifices quietly, and always came home with stories and songs.
+  </p>
+  <p>
+    Music ran in his blood. Joseph sang at every chance he got — weddings, birthdays, family
+    dinners, even lazy Sundays. Rumor has it that it was his voice that first caught Theresa’s
+    heart, who would later become his beloved wife. Together, they built a home full of laughter,
+    love, and care — raising Allen Mathew Joseph and Anitta Maria Joseph with strength and gentleness.
+  </p>
+  <p>
+    Joseph had a rare gift: he made friends effortlessly. Strangers turned into friends, and friends
+    into family. He was that guy — the one people called when they needed help, a laugh, or simply
+    to feel heard. Even animals knew his kindness. He once fed a neighborhood cat daily, and it became
+    part of his routine — walking him to the shed as he left for work and greeting him when he returned.
+    When the cat passed away, Joseph shed quiet tears. That was the heart he had.
+  </p>
+  <p>
+    On July 24, 2025, Joseph passed away — but not alone. His memory lives on in hundreds of hearts.
+    The calls and messages that flooded in afterward came from all corners of the world — people Allen
+    hadn’t even met — each one with a story of how “Pappa” made their life better, lighter, or funnier.
+  </p>
+  <p>
+    He wasn’t just a loving father, husband, and son. He was everyone’s person. And though he’s gone,
+    his laughter, music, and love will echo forever in our lives.
+  </p>
+  <p>
+    {"I don't know if I will ever be half the man you ever were, I promise I will be responsible. I love you Pappa."}
+  </p>
+</div>
       <div className="section">
         <h2>Share Your Memory</h2>
         <form onSubmit={handleSubmit}>
