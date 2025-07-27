@@ -174,10 +174,7 @@ export default function Home() {
   </p>
   <p>
     He wasn’t just a loving father, husband, and son. He was everyone’s person. And though he’s gone,
-    his laughter, music, and love will echo forever in our lives.
-  </p>
-  <p>
-    {"I don't know if I will ever be half the man you ever were, I promise I will be responsible. I love you Pappa."}
+    his laughter, music, and love will echo forever in our lives. We love you Pappa.
   </p>
 </div>
       <div className="section">
