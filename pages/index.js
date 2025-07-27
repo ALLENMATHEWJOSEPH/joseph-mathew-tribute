@@ -1,115 +1,214 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const supabase = createClient(
+  'https://qqhnnutmjsvkhafsihje.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxaG5udXRtanN2a2hhZnNpaGplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM1NzY2NTgsImV4cCI6MjA2OTE1MjY1OH0.LL9R9SQZPjffWjuBVJMHjkEcvCxhPpgvk2Y3j4-E3vA'
+);
 
 export default function Home() {
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [media, setMedia] = useState([]);
+  const [file, setFile] = useState(null);
+
+  useEffect(() => {
+    fetchMessages();
+    fetchMedia();
+  }, []);
+
+  const fetchMessages = async () => {
+    const { data } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
+    setMessages(data || []);
+  };
+
+  const fetchMedia = async () => {
+    const { data } = await supabase.storage.from('memories').list('', { limit: 100 });
+    setMedia(data || []);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    await supabase.from('messages').insert([{ text: message }]);
+    setMessage('');
+    fetchMessages();
+  };
+
+  const handleUpload = async () => {
+    if (!file) return;
+    const fileName = `${Date.now()}_${file.name}`;
+    await supabase.storage.from('memories').upload(fileName, file);
+    setFile(null);
+    fetchMedia();
+  };
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      <style>{`
+        body {
+          background-color: #fff9f0;
+          font-family: Georgia, serif;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+
+        header {
+          text-align: center;
+          padding: 3rem 1rem 1rem;
+          position: relative;
+        }
+
+        header h1 {
+          font-size: 3rem;
+          font-family: 'Great Vibes', cursive;
+          margin-bottom: 0.5rem;
+        }
+
+        header p {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #555;
+        }
+
+        .floral-top-left,
+        .floral-top-right {
+          position: absolute;
+          top: 0;
+          width: 200px;
+        }
+
+        .floral-top-left {
+          left: 0;
+        }
+
+        .floral-top-right {
+          right: 0;
+        }
+
+        .section {
+          max-width: 900px;
+          margin: auto;
+          padding: 2rem;
+          background: white;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          border-radius: 12px;
+          margin-bottom: 2rem;
+        }
+
+        .section h2 {
+          font-family: Georgia, serif;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+          color: #8b0000;
+        }
+
+        .message-box {
+          border-bottom: 1px solid #ddd;
+          padding: 1rem 0;
+        }
+
+        textarea {
+          width: 100%;
+          padding: 1rem;
+          font-size: 1rem;
+          margin-bottom: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+
+        button {
+          background-color: #8b0000;
+          color: white;
+          padding: 0.75rem 1.5rem;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+
+        .tribute-img {
+          width: 10%;
+          display: block;
+          margin: 1rem auto;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .gallery-img {
+          width: 20%;
+          max-width: 300px;
+          margin: 10px;
+          border-radius: 8px;
+        }
+      `}</style>
+
+      <header>
+        <img className="floral-top-left" src="/floral-left.png" alt="" />
+        <img className="floral-top-right" src="/floral-right.png" alt="" />
+        <h1>Joseph Mathew</h1>
+        <p>July 6, 1969 – July 24, 2025</p>
+        <img className="tribute-img" src="/family.png" alt="Joseph Mathew" />
+      </header>
+
+      <div className="section">
+        <h2>About Joseph Mathew</h2>
+        <p>
+  Joseph Mathew was the kind of man whose presence lit up a room long before he spoke. Born on July 6, 1969, in the warm embrace of a close-knit family, he was the youngest of five sons raised by Mr. Mathai Mathai and Mariayamma Mathai. Being the youngest, he was lovingly pampered by everyone — but never took that love for granted. From a young age, he carried both a deep sense of responsibility and an almost childlike joy for life.
+  <br /><br />
+  He studied at St. John’s Boys School in Nedumkunnam, where he was known not just for his friendly nature but for his playful charm and signature smile. Later, he completed his ITI studies in Myladi. Like many selfless fathers, Joseph made the hard decision to live away from home in his early years to ensure a better future for his family. He worked hard, made sacrifices quietly, and always came home with stories and songs.
+  <br /><br />
+  Music ran in his blood. Joseph sang at every chance he got — weddings, birthdays, family dinners, even lazy Sundays. Rumor has it that it was his voice that first caught Theresa’s heart, who would later become his beloved wife. Together, they built a home full of laughter, love, and care — raising Allen Mathew Joseph and Anitta Maria Joseph with strength and gentleness.
+  <br /><br />
+  Joseph had a rare gift: he made friends effortlessly. Strangers turned into friends, and friends into family. He was that guy — the one people called when they needed help, a laugh, or simply to feel heard. Even animals knew his kindness. He once fed a neighborhood cat daily, and it became part of his routine — walking him to the shed as he left for work and greeting him when he returned. When the cat passed away, Joseph shed quiet tears. That was the heart he had.
+  <br /><br />
+  On July 24, 2025, Joseph passed away — but not alone. His memory lives on in hundreds of hearts. The calls and messages that flooded in afterward came from all corners of the world — people Allen hadn’t even met — each one with a story of how “Pappa” made their life better, lighter, or funnier.
+  <br /><br />
+  He wasn’t just a loving father, husband, and son. He was everyone’s person. And though he’s gone, his laughter, music, and love will echo forever in our lives.
+   <br /><br />
+  I am not sure if I will ever be half the man you are, I promise to be good and responsible. I love you Pappa.</p>
+
+      </div>
+
+      <div className="section">
+        <h2>Share Your Memory</h2>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows="4"
+            placeholder="Write something you remember about him..."
+          />
+          <br />
+          <button type="submit">Submit Message</button>
+        </form>
+        <div style={{ marginTop: '2rem' }}>
+          {messages.map((msg, i) => (
+            <div key={i} className="message-box">{msg.text}</div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      <div className="section">
+        <h2>Upload a Photo or Video</h2>
+        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+        <button onClick={handleUpload} style={{ marginLeft: '1rem' }}>Upload</button>
+      </div>
+
+      <div className="section">
+        <h2>Gallery</h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          {media.map((item, index) => (
+            <div key={index}>
+              <img
+                className="gallery-img"
+                src={`https://qqhnnutmjsvkhafsihje.supabase.co/storage/v1/object/public/memories/${item.name}`}
+                alt="Uploaded Memory"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
