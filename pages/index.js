@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import Image from 'next/image'; // ✅ Import Next.js Image component
 
 const supabase = createClient(
   'https://qqhnnutmjsvkhafsihje.supabase.co',
@@ -131,11 +132,11 @@ export default function Home() {
       `}</style>
 
       <header>
-        <img className="floral-top-left" src="/floral-left.png" alt="" />
-        <img className="floral-top-right" src="/floral-right.png" alt="" />
+        <Image className="floral-top-left" src="/floral-left.png" alt="" width={200} height={200} />
+        <Image className="floral-top-right" src="/floral-right.png" alt="" width={200} height={200} />
         <h1>Joseph Mathew</h1>
         <p>July 6, 1969 – July 24, 2025</p>
-        <img className="tribute-img" src="/pappa.png" alt="Joseph Mathew" />
+        <Image className="tribute-img" src="/pappa.png" alt="Joseph Mathew" width={300} height={400} />
       </header>
 
       <div className="section">
@@ -201,11 +202,13 @@ export default function Home() {
         <h2>Gallery</h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
           {[...Array(36)].map((_, i) => (
-            <img
+            <Image
               key={i}
               className="gallery-img"
               src={`/gallery/${i + 1}.jpg`}
               alt={`Memory ${i + 1}`}
+              width={300}
+              height={200}
             />
           ))}
           {[...Array(7)].map((_, i) => (
