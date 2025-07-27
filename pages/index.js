@@ -139,8 +139,8 @@ export default function Home() {
       </header>
 
       <div className="section">
-  <h2>About Joseph Mathew</h2>
-  <p>
+        <h2>About Joseph Mathew</h2>
+        <p>
     Joseph Mathew was the kind of man whose presence lit up a room long before he spoke.
     Born on July 6, 1969, in the warm embrace of a close-knit family, he was the youngest
     of five sons raised by Mr. Mathai Mathai and Mariayamma Mathai. Being the youngest, he
@@ -176,7 +176,8 @@ export default function Home() {
     He wasn’t just a loving father, husband, and son. He was everyone’s person. And though he’s gone,
     his laughter, music, and love will echo forever in our lives. We love you Pappa.
   </p>
-</div>
+      </div>
+
       <div className="section">
         <h2>Share Your Memory</h2>
         <form onSubmit={handleSubmit}>
